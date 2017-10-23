@@ -6,25 +6,20 @@ use Illuminate\Http\Request;
 use App\Event;
 use App\Stuff;
 
-class EventsController extends Controller
+class StuffController extends Controller
 {
-	public function stuff($stuff)
-	{
-		if($stuff == 'event' || $stuff == 'responsi' || $stuff == 'project'){
-			$user_id = auth()->id();
-			$events = Stuff::where(['user_id' => $user_id, 'type' => $stuff])->latest()->get();
-			return view('dashboard.event.index')->with('events', $events)->with('stuff', $stuff);
-		}else{
-			return redirect('/dashboard');
-		}
-
-	}
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
+	
     public function index($stuff, $title)
     {
+    	$title = strtolower(str_ireplace('-', ' ', $title));
     	if($stuff == 'event'){
 	    	$event = Event::where('title', $title)->firstOrFail();
 	    	if(auth()->id() == $event->user_id){
-	    		return view('dashboard.event.detail', compact('event'));
+	    		return view('dashboard.event.event', compact('event'));
 	    	}else{
     			return redirect()->back();
     		} 
@@ -33,6 +28,7 @@ class EventsController extends Controller
 	    }elseif($stuff == 'project'){
 	    	return 'belum ada project';
 	    }else{
+	    	// atau tampilkan 404
 	    	return redirect('/dashboard');
 	    }
     }

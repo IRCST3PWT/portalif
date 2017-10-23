@@ -14,8 +14,8 @@
 Route::get('/', function () {
     return view('index');
 })->name('index');
-Route::get('/dashboard/{stuff}', 'EventsController@stuff');
-Route::get('/dashboard/{stuff}/{title}', 'EventsController@index');
+Route::get('/dashboard/{stuff}', 'DashboardController@stuff');
+Route::get('/dashboard/{stuff}/{title}', 'StuffController@index');
 Auth::routes();
 Route::post('/dashboard', 'DashboardController@store')->name('store');
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

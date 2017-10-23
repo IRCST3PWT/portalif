@@ -7,9 +7,10 @@
 	<div class="mt-4">
 		<div class="row">
 			@if(count($stuffs) > 0)
+
 				@foreach($stuffs as $stuff)
 					@if($stuff->user_id == auth()->user()->id)
-					    <a href="{{ url('/dashboard')}}/{{ $stuff->type }}/{{ $stuff->title }}">
+					    <a href="{{ url('/dashboard')}}/{{ $stuff->type }}/{{ strtolower(str_ireplace(' ','-', $stuff->title)) }}">
 						    <div class="card card-outline-primary mx-1 my-1" style="width: 20rem;">
 							  {{-- <img class="card-img-top" src="{{ asset('img/1.jpg')}}" alt="Card image cap"> --}}
 							  <div class="card-block">
